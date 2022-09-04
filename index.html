@@ -1,0 +1,113 @@
+<html>
+    <head>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body>
+
+    <section>
+        <header>
+            <nav class="navbar bg-light">
+                <div class="container-fluid">
+                    <span class="navbar-brand mb-0 h1">Floorball Toranalyse</span>
+                </div>
+            </nav>
+        </header>
+    </section>
+    <section class="main mt-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <button class="btn btn-primary" onClick="addGoal()" data-bs-toggle="modal" data-bs-target="#myModal">Tor</button>
+                    <button class="btn btn-danger" onclick="addGoalAgainst()" data-bs-toggle="modal" data-bs-target="#myModal">Gegentor</button>
+                </div>
+                <div class="col-lg-3 col-md-3">
+                    <div class="input-group mb-3">
+                        <input id="opponent" type="text" placeholder="Gegner" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2">
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="home" name="optradio" value="option1" checked>Heim
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="away" name="optradio" value="option2">Auswärts
+                        <label class="form-check-label" for="radio2"></label>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4">
+                    <button class="btn btn-primary" onclick="saveAndExport()">Export</button>
+                    <button class="btn btn-outline-primary" onclick="saveAsPng()"> Save PNG</button>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-lg-10 col-md-12 col-sm-12">
+                    <canvas id="canvas" width="800" height="420" backgroundImage='asstets/floorball-layout.png'></canvas>
+                </div>
+                <div class="col-lg-2 mt-3">
+                    <div id="goal-info-edit">
+                        <div class="input-group mb-3">
+                            <input type="text" id="videolink-edit" placeholder="Videolink" class="form-control" disabled />
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" id="situation-edit" placeholder="Situation" class="form-control" disabled />
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="number" id="drittel-edit" placeholder="Drittel" class="form-control" disabled />
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" id="score-edit" placeholder="Spielstand" class="form-control" disabled />
+                        </div>
+
+                        <button id="delete-button" onclick="deleteGoal()" class="btn btn-outline-primary">Delete</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+
+    <div id="myModal" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <input type="text" id="videolink" placeholder="Videolink" class="form-control" />
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" id="situation" placeholder="Situation" class="form-control" />
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="number" id="drittel" placeholder="Drittel" class="form-control" />
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" id="score" placeholder="Spielstand" class="form-control" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="saveGoalInfo()" data-bs-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="fabric.min.js"></script>
+    <script src="main.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+
+
+</body></html>
