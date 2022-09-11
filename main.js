@@ -86,7 +86,7 @@ function saveAndExport() {
     }
     a = document.createElement('a');
     var encodedUri = encodeURI(csvContent);
-    a.download = name;
+    a.setAttribute('download', 'export');
     a.href = encodedUri;
     a.click();
 }
@@ -97,8 +97,8 @@ function saveAsPng() {
         quality: 0.8
     });
     a = document.createElement('a');
-    a.download = name;
     a.href = imageUrl;
+    a.setAttribute('download', 'image');
     a.click();
 }
 
