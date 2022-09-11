@@ -72,19 +72,23 @@ function saveAndExport() {
     } else {
         location = 'Auswärts';
     }
+    var torart = ''
     for (i = 0; i < goals.length; i++) {
         g = goals[i]
         if (g.fill == 'blue') {
-            torart = 'tor';
+            torart = 'Tor';
         } else {
-            torart = 'gegentor';
+            torart = 'Gegentor';
         }
         row = [g.originX, g.originY, g.left, g.top, g.videolink, g.situation, g.drittel, torart, gegner, g.score, location]
         row = row.join(",");
         csvContent += row + "\r\n";
     }
+    a = document.createElement('a');
     var encodedUri = encodeURI(csvContent);
-    window.open(encodedUri);
+    a.download = name;
+    a.href = encodedUri;
+    a.click();
 }
 
 function saveAsPng() {
