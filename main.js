@@ -91,6 +91,73 @@ function saveAndExport() {
     a.click();
 }
 
+function importData() {
+    var fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = '.csv';
+    fileInput.onchange = function (event) {
+        var file = event.target.files[0];
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var contents = e.target.result;
+            var lines = contents.split('\n');
+            var headers = lines[0].split(',');
+            for (var i = 1; i < lines.length; i++) {
+                var row = lines[i].split(',');
+                if (row.length !== headers.length) {
+                    console.error('Invalid CSV row:', row);
+                    continue;
+                }
+                var positionData = {};
+                for (var j = 0; j < headers.length; j++) {
+                    positionData[headers[j]] = row[j];
+                }
+                if (positionData.originX != '-'){
+                    if ((positionData.torart === 'Tor' && parseInt(positionData.left) > canvas.width/2) ||(positionData.torart === 'Gegentor' && parseInt(positionData.left) < canvas.width/2)){
+                        positionData = mirrorDataPoint(positionData)
+                    }
+                    createCircleFromPositionData(positionData);
+                }
+                
+            }
+        };
+        reader.readAsText(file);
+    };
+    fileInput.click();
+}
+
+function mirrorDataPoint(dataPoint) {
+    var verticalMiddleline = 387.5; // hard-coded as the canvas is not centered properly
+    var horizontalMiddleline = 202.5;
+  
+    // Calculate the mirrored position
+    var mirroredTop = horizontalMiddleline - (dataPoint.top - horizontalMiddleline);
+    var mirroredLeft = verticalMiddleline - (dataPoint.left - verticalMiddleline);
+     
+    // Create a new mirrored data point
+    dataPoint.left = mirroredLeft;
+    dataPoint.top = mirroredTop;
+  
+    return dataPoint;
+  }
+
+function createCircleFromPositionData(positionData) {
+    var circle = new fabric.Circle({
+        radius: 10,
+        fill: positionData.torart === 'Tor' ? 'blue' : 'red',
+        originX: positionData.originX,
+        originY: positionData.originY,
+        left: parseInt(positionData.left),
+        top: parseInt(positionData.top),
+        videolink: positionData.videolink,
+        situation: positionData.situation,
+        drittel: positionData.drittel,
+        score: positionData.spielstand
+    });
+    circle.hasControls = false;
+    canvas.add(circle);
+}
+
 function saveAsPng() {
     var imageUrl = canvas.toDataURL({
         format: 'png',
